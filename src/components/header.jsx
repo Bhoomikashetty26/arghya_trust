@@ -4,7 +4,7 @@ import logo from "../assets/images/logodesign.png";
 import hero1 from "../assets/images/1H.jpg";
 import hero2 from "../assets/images/2H.jpg";
 import hero3 from "../assets/images/3h.jpg";
-import hero4 from "../assets/images/4H.jpg";
+import hero4 from "../assets/images/4H.JPG";
 
 export default function Header() {
   const [currentSlide, setCurrentSlide] = useState(0);
