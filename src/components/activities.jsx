@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import O1 from "../assets/images/1O.jpg";
 import O2 from "../assets/images/2O.jpeg";
-import O3 from "../assets/images/3O.jpg";
+import O3 from "../assets/images/3O.JPG";
 import U1 from "../assets/images/1U.jpg";
 import U2 from "../assets/images/2U.jpg";
 import U3 from "../assets/images/3U.jpg";
