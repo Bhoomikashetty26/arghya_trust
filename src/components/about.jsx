@@ -7,17 +7,13 @@ import founderImg from "../assets/images/founder.JPG";
 import work1 from "../assets/images/F1.jpg";
 import work2 from "../assets/images/F2.jpg";
 import work3 from "../assets/images/F3.jpg";
-import work4 from "../assets/images/f4.jpg";
+import work4 from "../assets/images/F4.jpg";
 import work5 from "../assets/images/F5.jpg";
 import work6 from "../assets/images/F6.jpg";
 import T1 from "../assets/images/T1.jpg";
 import T2 from "../assets/images/T2.jpg";
 import T3 from "../assets/images/T3.jpg";
 import T4 from "../assets/images/T4.jpg";
-import hero1 from "../assets/images/1H.jpg";
-import hero2 from "../assets/images/2H.jpg";
-import hero3 from "../assets/images/3H.JPG";
-import hero4 from "../assets/images/4H.JPG";
 
 <motion.div
 
