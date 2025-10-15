@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import logo3s from '../assets/images/logo3s.jpg';
 import meaning from '../assets/images/meaning.jpg';
 import Logokan from '../assets/images/Logokan.jpg'
@@ -7,14 +7,17 @@ import founderImg from "../assets/images/founder.JPG";
 import work1 from "../assets/images/F1.jpg";
 import work2 from "../assets/images/F2.jpg";
 import work3 from "../assets/images/F3.jpg";
-import work4 from "../assets/images/F4.jpg";
+import work4 from "../assets/images/f4.jpg";
 import work5 from "../assets/images/F5.jpg";
 import work6 from "../assets/images/F6.jpg";
 import T1 from "../assets/images/T1.jpg";
 import T2 from "../assets/images/T2.jpg";
 import T3 from "../assets/images/T3.jpg";
 import T4 from "../assets/images/T4.jpg";
-
+import hero1 from "../assets/images/1H.jpg";
+import hero2 from "../assets/images/2H.jpg";
+import hero3 from "../assets/images/3H.JPG";
+import hero4 from "../assets/images/4H.JPG";
 
 <motion.div
 
@@ -31,8 +34,10 @@ import T4 from "../assets/images/T4.jpg";
   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
 </motion.div>
 
-
 const About = () => {
+  const [activeCard, setActiveCard] = useState(null);
+   const [currentSlide, setCurrentSlide] = useState(0);
+   const [activeArghya, setActiveArghya] = useState(null);
   const [lang, setLang] = useState("en");
   const [counts, setCounts] = useState({
     districts: 0,
@@ -42,6 +47,14 @@ const About = () => {
   });
   const [visible, setVisible] = useState(false);
   const impactRef = useRef(null);
+const sliderImages = [hero1, hero2, hero3, hero4];
+
+ useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % sliderImages.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [sliderImages.length]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -74,7 +87,6 @@ const About = () => {
 
   return (
    <section id="about-us" className="py-20 text-center">
-   
       {/* Spiritual Overlay - Lighter for better background visibility */}
       <div className="absolute inset-0 bg-black/5"></div>
       
@@ -106,13 +118,19 @@ const About = () => {
         >
           <h2 className="text-5xl md:text-6xl font-serif font-bold text-[#1a365d] mb-6">ABOUT US</h2>
 <p className="text-black text-xl md:text-2xl max-w-5xl mx-auto leading-relaxed">
-  Arghya Trust is an initiative inspired by the philosophy of <span className="font-semibold text-black">3S – Self-Excellence (Jeeva), Sustainability (Jagattu), and Spirituality (Eeshwara)</span>. 
-  We envision a society where individuals grow holistically, live responsibly, and remain rooted in higher values – offering their lives as an <span className="italic text-black font-bold">Arghya</span> (sacred offering) to humanity and the Divine.
+  Arghya Trust is an initiative inspired by the philosophy of{" "}
+  <span className="font-extrabold bg-gradient-to-r from-[#1A365D] via-[#1A365D] to-[#1A365D] text-transparent bg-clip-text tracking-wide">
+    3S – Self-Excellence (Jeeva), Sustainability (Jagattu), and Spirituality (Eeshwara)
+  </span>.{" "}
+  We envision a society where individuals grow holistically, live responsibly, and remain rooted in higher values – offering their lives as an Arghya  (sacred offering) to humanity and the Divine.{" "}
+  <span className="font-extrabold bg-gradient-to-r from-[#1A365D] via-[#1A365D] to-[#1A365D] text-transparent bg-clip-text tracking-wide">
+  </span>{" "}
 </p>
 
 
+
         </motion.div>
-       {/* Vision & Mission Cards */}
+      {/* Vision & Mission Cards */}
 <div className="grid md:grid-cols-2 gap-8 mb-20 justify-items-center">
   {/* Vision Card */}
   <motion.div
@@ -126,7 +144,8 @@ const About = () => {
       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#51B94A] to-transparent rounded-bl-full"></div>
 
       <div className="relative z-10 flex flex-col justify-center h-full">
-        <h3 className="text-3xl font-serif font-bold text-[#1a365d] mb-4 text-center">
+        {/* 👇 Heading turns red on hover */}
+        <h3 className="text-3xl font-serif font-bold text-[#1a365d] mb-4 text-center group-hover:text-red-600 transition-colors duration-300">
           Vision
         </h3>
         <p className="text-black leading-relaxed text-justify">
@@ -152,7 +171,8 @@ const About = () => {
       <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-bl from-[#51B94A] to-transparent rounded-br-full"></div>
 
       <div className="relative z-10 flex flex-col justify-center h-full">
-        <h3 className="text-3xl font-serif font-bold text-[#1a365d] mb-4 text-center">
+        {/* 👇 Heading turns red on hover */}
+        <h3 className="text-3xl font-serif font-bold text-[#1a365d] mb-4 text-center group-hover:text-red-600 transition-colors duration-300">
           Mission
         </h3>
         <div className="space-y-3 text-black text-justify">
@@ -174,10 +194,7 @@ const About = () => {
   </motion.div>
 </div>
 
-
-
-     
-      {/* --- ARGHYA Stands For --- */}
+{/* --- ARGHYA Stands For --- */}
 <motion.div
   initial={{ opacity: 0, y: 30 }}
   whileInView={{ opacity: 1, y: 0 }}
@@ -190,36 +207,12 @@ const About = () => {
 
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     {[
-      {
-        letter: "A",
-        title: "Awareness",
-        desc: "Awareness on Self-Personality Development",
-      },
-      {
-        letter: "R",
-        title: "Responsibility",
-        desc: "Responsibility towards Environmental Sustainability",
-      },
-      {
-        letter: "G",
-        title: "Growth",
-        desc: "Growth of inner well-being through Spirituality",
-      },
-      {
-        letter: "H",
-        title: "Harmony",
-        desc: "Harmony among Self-Excellence, Sustainability & Spirituality; Outward, External & Inward; Jeeva, Jagathu & Eshwara – within oneself",
-      },
-      {
-        letter: "Y",
-        title: "Youth",
-        desc: "Youth Sensitization Programs towards 3S",
-      },
-      {
-        letter: "A",
-        title: "Action",
-        desc: "Action-Oriented Programs to achieve 3S across all walks of life",
-      },
+      { letter: "A", title: "Awareness", desc: "Awareness on Self-Personality Development" },
+      { letter: "R", title: "Responsibility", desc: "Responsibility towards Environmental Sustainability" },
+      { letter: "G", title: "Growth", desc: "Growth of inner well-being through Spirituality" },
+      { letter: "H", title: "Harmony", desc: "Harmony among Self-Excellence, Sustainability & Spirituality; Outward, External & Inward; Jeeva, Jagathu & Eshwara – within oneself" },
+      { letter: "Y", title: "Youth", desc: "Youth Sensitization Programs towards 3S" },
+      { letter: "A", title: "Action", desc: "Action-Oriented Programs to achieve 3S across all walks of life" },
     ].map((item, index) => (
       <motion.div
         key={index}
@@ -227,31 +220,29 @@ const About = () => {
         whileInView={{ opacity: 1, scale: 1 }}
         whileHover={{ scale: 1.08, y: -5 }}
         transition={{ delay: index * 0.1 }}
-        className="relative overflow-hidden bg-white text-black p-8 rounded-3xl shadow-2xl border border-[#fee2e2] text-left hover:shadow-red-400/50 duration-300"
+        className="group relative overflow-hidden bg-white text-black p-8 rounded-3xl shadow-2xl border border-[#fee2e2] text-left hover:shadow-red-400/50 duration-300"
       >
         <div className="relative z-10 flex flex-col">
-          {/* Letter + Word */}
-          <div className="flex items-end gap-4 mb-3">
-            <h2 className="text-7xl font-extrabold font-serif opacity-25">
+          {/* 👇 Both letter & title turn red on hover */}
+          <div className="flex items-end gap-4 mb-3 transition-colors duration-300">
+            <h2 className="text-7xl font-extrabold font-serif opacity-25 group-hover:text-red-600 transition-colors duration-300">
               {item.letter}
             </h2>
-            <h4 className="text-3xl font-bold tracking-wide drop-shadow-md text-[#1a365d]">
+            <h4 className="text-3xl font-bold tracking-wide drop-shadow-md text-[#1a365d] group-hover:text-red-600 transition-colors duration-300">
               {item.title}
             </h4>
           </div>
-
-          {/* Description */}
           <p className="text-sm leading-relaxed ml-[4.5rem] text-[#1a202c]">
             {item.desc}
           </p>
         </div>
-
-        {/* Subtle Glow Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/10 opacity-30"></div>
       </motion.div>
     ))}
   </div>
 </motion.div>
+
+
 
 {/* Trust Logo Section */}
 <motion.div
@@ -298,6 +289,7 @@ const About = () => {
 
   </div>
 </motion.div>
+
 {/* Founder Section */}
 <motion.section
  id="founder"
@@ -311,7 +303,7 @@ const About = () => {
     SRI RANJAN BELLARPADY
   </h3>
   {/* Subheading */}
-  <h4 className="text-xl md:text-2xl text-center text-[#2d5a4d] mb-8 font-semibold">
+  <h4 className="text-xl md:text-2xl text-center text-[bkack] mb-8 font-timesnewroman">
     FOUNDER & MANAGING TRUSTEE
   </h4>
 
@@ -320,19 +312,37 @@ const About = () => {
     <div className="flex flex-col lg:flex-row gap-6 lg:gap-6 items-stretch">
         
       {/* Left: Founder Image - Made taller to match content */}
-      <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        className="relative w-full lg:w-80 rounded-2xl overflow-hidden shadow-xl border-4 border-white/30 flex-shrink-0 self-stretch"
-      >
-        <img
-          src={founderImg}
-          alt="Sri Ranjan Bellarpady"
-          className="object-cover w-full h-full min-h-[500px]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-      </motion.div>
+<motion.div
+  initial={{ opacity: 0, x: -50 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true }}
+  className="relative w-full lg:w-80 rounded-2xl overflow-hidden shadow-xl border-4 border-white/30 flex-shrink-0 self-stretch"
+>
+  <img
+    src={founderImg} // your JPG image
+    alt="Sri Ranjan Bellarpady"
+    className="object-cover w-full h-full min-h-[500px]"
+  />
+  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+
+  {/* Social Icons */}
+  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
+    <a href="https://www.instagram.com/ranjanbellarpady" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#E1306C] text-2xl">
+      <i className="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.facebook.com/ranjanbellarpady" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#1877F2] text-2xl">
+      <i className="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://x.com/ranjanbelarpady" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#1DA1F2] text-2xl">
+  <i className="fab fa-twitter"></i>
+</a>
+<a href="https://www.youtube.com/@ranjanbellarpady9513" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#FF0000] text-2xl">
+  <i className="fab fa-youtube"></i>
+</a>
+
+  </div>
+</motion.div>
+
 
       {/* Middle: Content - Made to fill available space */}
       <motion.div
@@ -409,9 +419,9 @@ const About = () => {
           </a>
         ))}
       </motion.div>
-
     </div>
   </div>
+  
 </motion.section>
 
 {/* Trustees Section */}
@@ -430,24 +440,29 @@ const About = () => {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
       {[
         {
-          name: "Sri Ranjan Bellarpady",
-          role: "Managing Trustee",
-          img: T1,
-        },
+  name: "Sri Ranjan Bellarpady",
+  role: "Managing Trustee",
+  img: T1,
+  fb: "https://www.facebook.com/ranjanbellarpady",
+},
+,
         {
-          name: "Mr. Bellala Gopinath Rao ",
+          name: "Mr. Bellala Gopinath Rao",
           role: "Trustee",
           img: T2,
+          fb: "https://www.facebook.com/bellalagopinath.rao",
         },
         {
           name: "Mr. Dilraj Alva",
           role: "Trustee",
           img: T3,
+          fb: "https://www.facebook.com/dilraj.alva",
         },
         {
           name: "Mr. Vinay P M",
           role: "Trustee",
           img: T4,
+          fb: "https://www.facebook.com/vinay.pm.3/",
         },
       ].map((person, i) => (
         <motion.div
@@ -468,9 +483,17 @@ const About = () => {
           <h4 className="text-lg font-semibold text-[#1a365d]">
             {person.name}
           </h4>
-          <p className="text-sm text-[#2d5a4d] font-medium">
+          <p className="text-sm text-[#2d5a4d] font-medium mb-2">
             {person.role}
           </p>
+
+          {/* Social Icons */}
+          <div className="flex justify-center gap-4">
+            <a href={person.fb} target="_blank" rel="noopener noreferrer" className="text-[#1877F2] text-xl hover:scale-110 transition-transform">
+              <i className="fab fa-facebook-f"></i>
+            </a>
+
+          </div>
         </motion.div>
       ))}
     </div>
@@ -478,7 +501,7 @@ const About = () => {
 </motion.section>
 
 
-      {/* Impact Section */}
+    {/* Impact Section */}
 <motion.div
   ref={impactRef}
   initial={{ opacity: 0, scale: 0.95 }}
@@ -504,13 +527,16 @@ const About = () => {
           key={i}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          whileHover={{ scale: 1.05 }} // box hover effect
           transition={{ delay: i * 0.2 }}
           viewport={{ once: true }}
-          className="font-serif"
+          className="font-serif cursor-pointer"
         >
           <motion.div
             className="text-5xl md:text-6xl font-extrabold mb-3 drop-shadow-lg"
             style={{ color: "black" }}
+            whileHover={{ color: "#FF0000" }} // number changes to red on hover
+            transition={{ type: "spring", stiffness: 300 }}
           >
             {item.count}+
           </motion.div>
@@ -522,6 +548,7 @@ const About = () => {
     </div>
   </div>
 </motion.div>
+
       </div>
     </section>
   );

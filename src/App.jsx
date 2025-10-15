@@ -3,7 +3,7 @@ import About from './components/about';
 import Activities from './components/activities';
 import Sc from './components/SC';
 import JoinContact from './components/footersection';
-import FloatingSocialSidebar from './components/FloatingSocialSidebar';
+// import FloatingSocialSidebar from './components/FloatingSocialSidebar';
 import bg from './assets/images/back.jpg';
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
         <JoinContact />
       </div>
 
-      <FloatingSocialSidebar />
+      {/* <FloatingSocialSidebar /> */}
     </div>
   );
 }

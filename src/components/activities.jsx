@@ -95,15 +95,15 @@ const Activities = () => {
                       : "group-hover:bg-red-500/10 group-hover:shadow-md group-hover:shadow-red-500/20"
                   }`}
                 ></div>
-                
+
                 {/* Main Card */}
                 <motion.div
-                  animate={{ 
+                  animate={{
                     scale: activeCard === activity.id ? 1.02 : 1,
-                    y: activeCard === activity.id ? -5 : 0
+                    y: activeCard === activity.id ? -5 : 0,
                   }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className={`relative bg-white rounded-3xl overflow-hidden shadow-lg border transition-all duration-500 ${
+                  className={`relative bg-white rounded-3xl overflow-hidden shadow-lg border transition-all duration-500 flex flex-col h-full min-h-[500px] ${
                     activeCard === activity.id
                       ? "border-red-500 shadow-2xl shadow-red-500/20"
                       : "border-[#dc2626]/20 hover:border-[#dc2626]/60 hover:shadow-xl hover:shadow-[#dc2626]/20"
@@ -116,10 +116,14 @@ const Activities = () => {
                     ></div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                   </div>
-                  <div className="p-6">
-                    <h3 className={`text-2xl font-bold mb-2 transition-colors font-serif ${
-                      activeCard === activity.id ? "text-red-600" : "text-[#1a365d] group-hover:text-[#dc2626]"
-                    }`}>
+                  <div className="p-6 flex-1 overflow-auto">
+                    <h3
+                      className={`text-2xl font-bold mb-2 transition-colors font-serif ${
+                        activeCard === activity.id
+                          ? "text-red-600"
+                          : "text-[#1a365d] group-hover:text-[#dc2626]"
+                      }`}
+                    >
                       {activity.title}
                     </h3>
                     <p className="text-[#4a5568] text-sm leading-relaxed whitespace-pre-line">
@@ -167,15 +171,15 @@ const Activities = () => {
                       : "group-hover:bg-red-500/10 group-hover:shadow-md group-hover:shadow-red-500/20"
                   }`}
                 ></div>
-                
+
                 {/* Main Card */}
                 <motion.div
-                  animate={{ 
+                  animate={{
                     scale: activeCard === project.id ? 1.02 : 1,
-                    y: activeCard === project.id ? -5 : 0
+                    y: activeCard === project.id ? -5 : 0,
                   }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className={`relative bg-white rounded-3xl overflow-hidden shadow-lg border transition-all duration-500 ${
+                  className={`relative bg-white rounded-3xl overflow-hidden shadow-lg border transition-all duration-500 flex flex-col h-full min-h-[500px] ${
                     activeCard === project.id
                       ? "border-red-500 shadow-2xl shadow-red-500/20"
                       : "border-[#dc2626]/20 hover:border-[#dc2626]/60 hover:shadow-xl hover:shadow-[#dc2626]/20"
@@ -188,10 +192,14 @@ const Activities = () => {
                     ></div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                   </div>
-                  <div className="p-6">
-                    <h3 className={`text-2xl font-bold mb-2 transition-colors font-serif ${
-                      activeCard === project.id ? "text-red-600" : "text-[#1a365d] group-hover:text-[#dc2626]"
-                    }`}>
+                  <div className="p-6 flex-1 overflow-auto">
+                    <h3
+                      className={`text-2xl font-bold mb-2 transition-colors font-serif ${
+                        activeCard === project.id
+                          ? "text-red-600"
+                          : "text-[#1a365d] group-hover:text-[#dc2626]"
+                      }`}
+                    >
                       {project.title}
                     </h3>
                     <p className="text-[#4a5568] text-sm leading-relaxed whitespace-pre-line">

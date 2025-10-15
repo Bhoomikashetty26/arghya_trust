@@ -7,29 +7,24 @@ import join1 from "../assets/images/join1.jpg";
 import join2 from "../assets/images/join2.jpg";
 import join3 from "../assets/images/join3.jpeg";
 
-const TornPaperEffect = ({ children, className = "" }) => {
+const FooterBox = ({ children, className = "" }) => {
   return (
-    <div className={`relative ${className}`}>
-      {/* Content with subtle shadow */}
-      <div className="relative bg-white rounded-lg p-6 shadow-sm border border-gray-100">
-        {children}
-      </div>
-      
-      {/* Bottom torn edge - more subtle and integrated */}
-      
+    <div className={`bg-white rounded-xl p-6 shadow-lg border border-gray-200 hover:bg-red-50 hover:border-red-500 transition-colors duration-300 ${className} group`}>
+      {children}
     </div>
   );
 };
 
 const FooterSection = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isInterestsOpen, setIsInterestsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     age: "",
     gender: "",
     education: "",
     location: "",
-    language: "English",
+    language: "",
     whatsapp: "",
     email: "",
     interests: [],
@@ -64,6 +59,17 @@ const FooterSection = () => {
     website: "www.arghyatrust.org",
   };
 
+  const languageOptions = [
+    { value: "english", label: "English" },
+    { value: "kannada", label: "Kannada" }
+  ];
+
+  const interestOptions = [
+    { value: "self-excellence", label: "Self Excellence", desc: "Educational & Personal Development" },
+    { value: "sustainability", label: "Sustainability", desc: "Environment & Green Initiatives" },
+    { value: "spirituality", label: "Spirituality", desc: "Temples, Rituals & Dharma" },
+  ];
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -82,6 +88,20 @@ const FooterSection = () => {
     }));
   };
 
+  const toggleInterestsSection = () => {
+    setIsInterestsOpen(!isInterestsOpen);
+  };
+
+  const getSelectedInterestsText = () => {
+    if (formData.interests.length === 0) {
+      return "Select your areas of interest";
+    }
+    return formData.interests.map(interest => {
+      const option = interestOptions.find(opt => opt.value === interest);
+      return option ? option.label : interest;
+    }).join(", ");
+  };
+
   const encodeMailTo = (to, subject, body) => {
     const s = encodeURIComponent(subject || "");
     const b = encodeURIComponent(body || "");
@@ -89,6 +109,11 @@ const FooterSection = () => {
   };
 
   const buildVolunteerEmailBody = (data) => {
+    const selectedInterests = interestOptions
+      .filter(opt => data.interests.includes(opt.value))
+      .map(opt => opt.label)
+      .join(", ");
+
     return [
       `Name: ${data.name}`,
       `Age: ${data.age}`,
@@ -98,7 +123,7 @@ const FooterSection = () => {
       `Language: ${data.language}`,
       `WhatsApp: ${data.whatsapp}`,
       `Email: ${data.email}`,
-      `Interests: ${data.interests.join(", ")}`,
+      `Interests: ${selectedInterests}`,
       `Duration: ${data.duration}`,
       `Agreement: ${data.agreement ? "Yes" : "No"}`,
     ].join("\n");
@@ -106,14 +131,14 @@ const FooterSection = () => {
 
   const handleSubmit = () => {
     if (!formData.name || !formData.age || !formData.gender || !formData.education || 
-        !formData.location || !formData.whatsapp || !formData.email || !formData.agreement) {
+        !formData.location || !formData.language || !formData.whatsapp || !formData.email || !formData.agreement) {
       alert("Please fill all required fields and accept the agreement.");
       return;
     }
 
     const subject = "Volunteer Application";
     const body = buildVolunteerEmailBody(formData);
-    const mailto = encodeMailTo("Sriranjan@arghyatrust.org", subject, body);
+    const mailto = encodeMailTo("sriranjan@arghyatrust.org", subject, body);
 
     window.location.href = mailto;
 
@@ -125,13 +150,14 @@ const FooterSection = () => {
       gender: "",
       education: "",
       location: "",
-      language: "English",
+      language: "",
       whatsapp: "",
       email: "",
       interests: [],
       duration: "",
       agreement: false,
     });
+    setIsInterestsOpen(false);
   };
 
   const handleNewsletterSend = () => {
@@ -141,34 +167,30 @@ const FooterSection = () => {
     }
     const subject = "Newsletter / Message from website";
     const body = `Message from: ${newsletterEmail}\n\nPlease write your message here...`;
-    const mailto = encodeMailTo("Sriranjan@arghyatrust.org", subject, body);
+    const mailto = encodeMailTo("sriranjan@arghyatrust.org", subject, body);
     window.location.href = mailto;
     setNewsletterEmail("");
     alert("Opening your email client. Thank you for reaching out!");
   };
 
   return (
-    <footer className="relative bg-[#DBDBDB] text-black pt-20">
-      {/* Main torn edge at top of footer */}
-      <div className="absolute top-0 left-0 w-full h-12 bg-black z-10"
-        style={{
-          clipPath: 'polygon(0% 100%, 2% 80%, 4% 100%, 6% 60%, 8% 100%, 10% 70%, 12% 100%, 14% 50%, 16% 100%, 18% 90%, 20% 100%, 22% 40%, 24% 100%, 26% 80%, 28% 100%, 30% 30%, 32% 100%, 34% 70%, 36% 100%, 38% 60%, 40% 100%, 42% 85%, 44% 100%, 46% 45%, 48% 100%, 50% 75%, 52% 100%, 54% 55%, 56% 100%, 58% 95%, 60% 100%, 62% 35%, 64% 100%, 66% 65%, 68% 100%, 70% 40%, 72% 100%, 74% 88%, 76% 100%, 78% 25%, 80% 100%, 82% 78%, 84% 100%, 86% 48%, 88% 100%, 90% 82%, 92% 100%, 94% 38%, 96% 100%, 98% 68%, 100% 100%)',
-        }}
-      ></div>
-
+    <footer className="relative bg-[#DBDBDB] text-black pt-16">
       <div className="max-w-7xl mx-auto px-6 pb-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative z-20"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-8 relative z-20"
         >
           {/* JOIN US */}
-          <TornPaperEffect className="mt-4">
-            <div id="join">
-              <h3 className="text-2xl font-bold tracking-wide mb-4 text-gray-900">JOIN US</h3>
-              <p className="text-sm text-gray-700 leading-relaxed mb-6">
+          <FooterBox className="h-full flex flex-col">
+            <div id="join" className="flex flex-col items-center text-center h-full">
+              <h3 className="text-2xl font-bold tracking-wide mb-4 text-gray-900 text-center w-full group-hover:text-red-500 transition-colors">
+                JOIN US
+              </h3>
+
+              <p className="text-sm text-gray-700 leading-relaxed mb-6 flex-grow">
                 Join hands with us to transform Self, serve the World, and offer to the Divine.
               </p>
 
@@ -182,29 +204,32 @@ const FooterSection = () => {
               </motion.button>
 
               {/* 3 round images with captions */}
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 gap-4 w-full mt-auto">
                 {journeyCards.map((c, idx) => (
                   <div key={idx} className="text-center">
-                    <div className="w-16 h-16 mx-auto rounded-full overflow-hidden border-2 border-gray-200 shadow-md mb-2">
+                    <div className="w-20 h-20 mx-auto rounded-full overflow-hidden border-2 border-gray-200 shadow-md mb-3">
                       <img
                         src={c.img}
                         alt={c.title}
                         className="object-cover w-full h-full"
                       />
                     </div>
-                    <div className="text-xs font-semibold text-gray-800">{c.title}</div>
-                    <div className="text-[10px] text-gray-600 leading-tight mt-1">{c.desc}</div>
+                    <div className="text-sm font-semibold text-gray-800">{c.title}</div>
+                    <div className="text-xs text-gray-600 leading-tight mt-1">{c.desc}</div>
                   </div>
                 ))}
               </div>
             </div>
-          </TornPaperEffect>
+          </FooterBox>
 
           {/* DONATE NOW */}
-          <TornPaperEffect className="mt-4">
-            <div>
-              <h3 className="text-2xl font-bold tracking-wide mb-4 text-gray-900">DONATE NOW</h3>
-              <p className="text-sm text-gray-700 leading-relaxed mb-6">
+          <FooterBox className="h-full flex flex-col">
+            <div className="flex flex-col items-center text-center h-full">
+              <h3 className="text-2xl font-bold tracking-wide mb-4 text-gray-900 text-center w-full group-hover:text-red-500 transition-colors">
+                DONATE NOW
+              </h3>
+
+              <p className="text-sm text-gray-700 leading-relaxed mb-6 flex-grow">
                 Scan the QR to donate or use the bank details below.
               </p>
 
@@ -214,9 +239,9 @@ const FooterSection = () => {
                 </div>
               </div>
 
-              <div className="space-y-3 text-sm bg-gray-50 p-4 rounded-lg">
-                <h4 className="font-bold text-base mb-3 text-gray-900">BANK DETAILS</h4>
-                <div className="space-y-2">
+              <div className="space-y-3 text-sm bg-gray-50 p-4 rounded-lg w-full">
+                <h4 className="font-bold text-base mb-3 text-gray-900 text-center">BANK DETAILS</h4>
+                <div className="space-y-2 text-left">
                   <div><span className="font-semibold text-gray-800">Bank:</span> HDFC Bank</div>
                   <div><span className="font-semibold text-gray-800">Branch:</span> Hampanakatta Mangalore</div>
                   <div><span className="font-semibold text-gray-800">Ac. No.:</span> 50100359972602</div>
@@ -224,22 +249,25 @@ const FooterSection = () => {
                 </div>
               </div>
             </div>
-          </TornPaperEffect>
+          </FooterBox>
 
           {/* CONTACT US */}
-          <TornPaperEffect className="mt-4">
-            <div id="contactus">
-              <h3 className="text-2xl font-bold tracking-wide mb-4 text-gray-900">CONTACT US</h3>
-              <p className="text-sm text-gray-700 leading-relaxed mb-6">
+          <FooterBox className="h-full flex flex-col">
+            <div id="contactus" className="flex flex-col items-center text-center h-full">
+              <h3 className="text-2xl font-bold tracking-wide mb-4 text-gray-900 text-center w-full group-hover:text-red-500 transition-colors">
+                CONTACT US
+              </h3>
+
+              <p className="text-sm text-gray-700 leading-relaxed mb-4">
                 Write to us or use the contact details below.
               </p>
 
-              <div className="flex gap-2 mb-8">
+              <div className="flex gap-2 mb-6 w-full">
                 <input
                   type="email"
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
-                  placeholder="Your email"
+                  placeholder="Write to Us..."
                   className="flex-1 px-4 py-3 rounded-lg border border-gray-300 outline-none focus:border-black focus:ring-1 focus:ring-black transition-all text-sm"
                 />
                 <button
@@ -250,10 +278,10 @@ const FooterSection = () => {
                 </button>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-4 w-full">
                 <div className="flex items-start gap-3">
                   <div className="text-lg mt-0.5 text-gray-600">📍</div>
-                  <div>
+                  <div className="text-left">
                     <div className="font-semibold text-sm text-gray-900">Visit Us</div>
                     <div className="text-sm text-gray-700">{contactInfo.visit}</div>
                   </div>
@@ -261,7 +289,7 @@ const FooterSection = () => {
 
                 <div className="flex items-start gap-3">
                   <div className="text-lg mt-0.5 text-gray-600">📞</div>
-                  <div>
+                  <div className="text-left">
                     <div className="font-semibold text-sm text-gray-900">Call Us</div>
                     <a href={`tel:${contactInfo.phone}`} className="text-sm text-gray-700 hover:text-black transition-colors">
                       {contactInfo.phone}
@@ -271,7 +299,7 @@ const FooterSection = () => {
 
                 <div className="flex items-start gap-3">
                   <div className="text-lg mt-0.5 text-gray-600">✉️</div>
-                  <div>
+                  <div className="text-left">
                     <div className="font-semibold text-sm text-gray-900">Email</div>
                     <a href={`mailto:${contactInfo.mail}`} className="text-sm text-gray-700 hover:text-black transition-colors break-all">
                       {contactInfo.mail}
@@ -280,7 +308,7 @@ const FooterSection = () => {
                 </div>
               </div>
             </div>
-          </TornPaperEffect>
+          </FooterBox>
         </motion.div>
       </div>
 
@@ -390,8 +418,12 @@ const FooterSection = () => {
                           onChange={handleInputChange}
                           className="px-4 py-3 rounded-lg border border-gray-300 bg-white outline-none focus:border-black focus:ring-1 focus:ring-black"
                         >
-                          <option value="English">English</option>
-                          <option value="Kannada">Kannada</option>
+                          <option value="">Select Language *</option>
+                          {languageOptions.map((lang) => (
+                            <option key={lang.value} value={lang.value}>
+                              {lang.label}
+                            </option>
+                          ))}
                         </select>
                         <input
                           name="whatsapp"
@@ -412,30 +444,54 @@ const FooterSection = () => {
                     </div>
                   </div>
 
-                  {/* Interests */}
+                  {/* Interests - Collapsible Section */}
                   <div>
-                    <h4 className="font-semibold text-lg mb-4 text-black">Areas of Interest</h4>
-                    <div className="space-y-3">
-                      {[
-                        { value: "self-excellence", label: "Self Excellence", desc: "Educational & Personal Development" },
-                        { value: "sustainability", label: "Sustainability", desc: "Environment & Green Initiatives" },
-                        { value: "spirituality", label: "Spirituality", desc: "Temples, Rituals & Dharma" },
-                      ].map((opt) => (
-                        <label key={opt.value} className="flex items-start gap-3 p-4 border border-gray-300 rounded-lg cursor-pointer hover:border-black transition-colors">
-                          <input
-                            type="checkbox"
-                            value={opt.value}
-                            checked={formData.interests.includes(opt.value)}
-                            onChange={handleInterestChange}
-                            className="w-5 h-5 mt-0.5"
-                          />
-                          <div>
-                            <div className="font-medium text-black">{opt.label}</div>
-                            <div className="text-sm text-gray-600">{opt.desc}</div>
-                          </div>
-                        </label>
-                      ))}
+                    <div 
+                      className="flex items-center justify-between p-4 border border-gray-300 rounded-lg cursor-pointer hover:border-black transition-colors mb-4"
+                      onClick={toggleInterestsSection}
+                    >
+                      <div>
+                        <h4 className="font-semibold text-lg text-black">Areas of Interest</h4>
+                        <p className="text-sm text-gray-600 mt-1">{getSelectedInterestsText()}</p>
+                      </div>
+                      <motion.div
+                        animate={{ rotate: isInterestsOpen ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="text-2xl text-gray-500"
+                      >
+                        ⌄
+                      </motion.div>
                     </div>
+
+                    <AnimatePresence>
+                      {isInterestsOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="space-y-3 border border-gray-200 rounded-lg p-4 bg-gray-50">
+                            {interestOptions.map((opt) => (
+                              <label key={opt.value} className="flex items-start gap-3 p-3 border border-gray-300 rounded-lg cursor-pointer hover:border-black transition-colors bg-white">
+                                <input
+                                  type="checkbox"
+                                  value={opt.value}
+                                  checked={formData.interests.includes(opt.value)}
+                                  onChange={handleInterestChange}
+                                  className="w-5 h-5 mt-0.5"
+                                />
+                                <div>
+                                  <div className="font-medium text-black">{opt.label}</div>
+                                  <div className="text-sm text-gray-600">{opt.desc}</div>
+                                </div>
+                              </label>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
 
                   {/* Duration */}

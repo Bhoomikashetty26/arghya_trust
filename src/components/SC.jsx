@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import devi from "../assets/images/devi.jpg";
+import devi from "../assets/images/devii.jpg";
 
 const SCMY2026 = () => {
   return (
@@ -11,10 +11,10 @@ const SCMY2026 = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="bg-[#DBDBDB]/90 py-12 px-6 md:px-12 rounded-3xl shadow-2xl border border-white/30 max-w-7xl mx-auto"
+        className="bg-[white]/90 py-12 px-6 md:px-12 rounded-3xl shadow-2xl border border-white/30 max-w-7xl mx-auto"
       >
         {/* Heading */}
-        <h4 className="text-3xl md:text-4xl font-serif font-bold text-[#1a365d] mb-10 drop-shadow-md text-center">
+        <h4 className="text-3xl md:text-4xl font-serif font-bold text-[red] mb-10 drop-shadow-md text-center">
           Shatachandi Maha Yagna – 2026
         </h4>
 
