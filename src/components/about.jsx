@@ -43,14 +43,6 @@ const About = () => {
   });
   const [visible, setVisible] = useState(false);
   const impactRef = useRef(null);
-const sliderImages = [hero1, hero2, hero3, hero4];
-
- useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % sliderImages.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [sliderImages.length]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
