@@ -183,16 +183,20 @@ export default function Header() {
                   </div>
                 ) : (
                   /* Regular Nav Items */
-                  <motion.a
-                    href={`#${item.id}`}
-                    whileHover={{ y: -2 }}
-                    className={`relative px-5 py-2.5 font-medium text-sm tracking-wider transition-all duration-300 rounded-full group ${
-                      scrolled
-                        ? "text-[#1a365d] hover:text-[#dc2626]"
-                        : "text-white/90 hover:text-[#f5deb3]"
-                    }`}
-                  >
-                    {item.label}
+                 <motion.a
+  href={`#${item.id}`}
+  whileHover={{ y: -2 }}
+  onClick={() => {
+    setIsAboutDropdownOpen(false); // closes About Us dropdown
+    setIsMenuOpen(false); // closes mobile menu if open
+  }}
+  className={`relative px-5 py-2.5 font-medium text-sm tracking-wider transition-all duration-300 rounded-full group ${
+    scrolled
+      ? "text-[#1a365d] hover:text-[#dc2626]"
+      : "text-white/90 hover:text-[#f5deb3]"
+  }`}
+>
+  {item.label}
                     <motion.span
                       className={`absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
                         scrolled
@@ -291,7 +295,10 @@ export default function Header() {
                       initial={{ x: -20, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       className="flex items-center gap-3 px-6 py-4 text-[#1a365d] hover:bg-[#f5deb3]/20 transition-colors border-b border-[#f5deb3]/20 last:border-0"
-                      onClick={() => setIsMenuOpen(false)}
+                       onClick={() => {
+    setIsMenuOpen(false);
+    setIsAboutDropdownOpen(false);
+  }}
                     >
                       <span className="font-medium">{item.label}</span>
                     </motion.a>
@@ -420,8 +427,6 @@ export default function Header() {
     ))}
   </div>
 </section>
-
-
     </>
   );
 }

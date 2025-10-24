@@ -278,6 +278,84 @@ const About = () => {
   </div>
 </motion.div>
 
+
+{/* Trustees Section */}
+<motion.section
+  initial={{ opacity: 0, y: 50 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  className="mb-16"
+>
+  <h3 className="text-4xl md:text-5xl font-serif font-bold text-[#1a365d] mb-10 drop-shadow-lg text-center">
+    TRUSTEES OF ARGHYA TRUST
+  </h3>
+
+  {/* Container */}
+  <div className="bg-[#DBDBDB] rounded-3xl p-8 lg:p-10 shadow-2xl border border-white/20">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
+      {[
+        {
+  name: "Sri Ranjan Bellarpady",
+  role: "Managing Trustee",
+  img: T1,
+  fb: "https://www.facebook.com/ranjanbellarpady",
+},
+,
+        {
+          name: "Mr. Bellala Gopinath Rao",
+          role: "Trustee",
+          img: T2,
+          fb: "https://www.facebook.com/bellalagopinath.rao",
+        },
+        {
+          name: "Mr. Dilraj Alva",
+          role: "Trustee",
+          img: T3,
+          fb: "https://www.facebook.com/dilraj.alva",
+        },
+        {
+          name: "Mr. Vinay P M",
+          role: "Trustee",
+          img: T4,
+          fb: "https://www.facebook.com/vinay.pm.3/",
+        },
+      ].map((person, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: i * 0.2 }}
+          className="bg-white rounded-2xl p-4 w-64 text-center shadow-lg border border-white/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
+        >
+          <div className="overflow-hidden rounded-xl mb-4">
+            <img
+              src={person.img}
+              alt={person.name}
+              className="object-cover w-full h-60 rounded-xl hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+          <h4 className="text-lg font-semibold text-[#1a365d]">
+            {person.name}
+          </h4>
+          <p className="text-sm text-[#2d5a4d] font-medium mb-2">
+            {person.role}
+          </p>
+
+          {/* Social Icons */}
+          <div className="flex justify-center gap-4">
+            <a href={person.fb} target="_blank" rel="noopener noreferrer" className="text-[#1877F2] text-xl hover:scale-110 transition-transform">
+              <i className="fab fa-facebook-f"></i>
+            </a>
+
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</motion.section>
+
+
 {/* Founder Section */}
 <motion.section
  id="founder"
@@ -410,82 +488,6 @@ const About = () => {
     </div>
   </div>
   
-</motion.section>
-
-{/* Trustees Section */}
-<motion.section
-  initial={{ opacity: 0, y: 50 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
-  className="mb-16"
->
-  <h3 className="text-4xl md:text-5xl font-serif font-bold text-[#1a365d] mb-10 drop-shadow-lg text-center">
-    TRUSTEES OF ARGHYA TRUST
-  </h3>
-
-  {/* Container */}
-  <div className="bg-[#DBDBDB] rounded-3xl p-8 lg:p-10 shadow-2xl border border-white/20">
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
-      {[
-        {
-  name: "Sri Ranjan Bellarpady",
-  role: "Managing Trustee",
-  img: T1,
-  fb: "https://www.facebook.com/ranjanbellarpady",
-},
-,
-        {
-          name: "Mr. Bellala Gopinath Rao",
-          role: "Trustee",
-          img: T2,
-          fb: "https://www.facebook.com/bellalagopinath.rao",
-        },
-        {
-          name: "Mr. Dilraj Alva",
-          role: "Trustee",
-          img: T3,
-          fb: "https://www.facebook.com/dilraj.alva",
-        },
-        {
-          name: "Mr. Vinay P M",
-          role: "Trustee",
-          img: T4,
-          fb: "https://www.facebook.com/vinay.pm.3/",
-        },
-      ].map((person, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: i * 0.2 }}
-          className="bg-white rounded-2xl p-4 w-64 text-center shadow-lg border border-white/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
-        >
-          <div className="overflow-hidden rounded-xl mb-4">
-            <img
-              src={person.img}
-              alt={person.name}
-              className="object-cover w-full h-60 rounded-xl hover:scale-105 transition-transform duration-500"
-            />
-          </div>
-          <h4 className="text-lg font-semibold text-[#1a365d]">
-            {person.name}
-          </h4>
-          <p className="text-sm text-[#2d5a4d] font-medium mb-2">
-            {person.role}
-          </p>
-
-          {/* Social Icons */}
-          <div className="flex justify-center gap-4">
-            <a href={person.fb} target="_blank" rel="noopener noreferrer" className="text-[#1877F2] text-xl hover:scale-110 transition-transform">
-              <i className="fab fa-facebook-f"></i>
-            </a>
-
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  </div>
 </motion.section>
 
 

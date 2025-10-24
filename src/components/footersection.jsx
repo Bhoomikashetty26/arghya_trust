@@ -61,7 +61,7 @@ const FooterSection = () => {
 
   const languageOptions = [
     { value: "english", label: "English" },
-    { value: "kannada", label: "Kannada" }
+    { value: "kannada", label: "Kannada" },
   ];
 
   const interestOptions = [
@@ -174,7 +174,7 @@ const FooterSection = () => {
   };
 
   return (
-    <footer className="relative bg-[#DBDBDB] text-black pt-16">
+      <footer className="relative bg-[#DBDBDB] text-black pt-16 mt-20">
       <div className="max-w-7xl mx-auto px-6 pb-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

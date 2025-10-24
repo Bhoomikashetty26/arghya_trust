@@ -1,7 +1,7 @@
 import Header from './components/header';
 import About from './components/about';
+import GallerySlider from './components/GallerySlider';
 import Activities from './components/activities';
-import Sc from './components/SC';
 import JoinContact from './components/footersection';
 // import FloatingSocialSidebar from './components/FloatingSocialSidebar';
 import bg from './assets/images/back.jpg';
@@ -22,11 +22,10 @@ function App() {
       <div className="relative z-10">
         <Header />
         <About />
+        <GallerySlider />
         <Activities />
-        <Sc />
         <JoinContact />
       </div>
-
       {/* <FloatingSocialSidebar /> */}
     </div>
   );
