@@ -18,6 +18,8 @@ const FooterBox = ({ children, className = "" }) => {
 const FooterSection = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isInterestsOpen, setIsInterestsOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isNewsletterSubmitting, setIsNewsletterSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     age: "",
@@ -102,75 +104,110 @@ const FooterSection = () => {
     }).join(", ");
   };
 
-  const encodeMailTo = (to, subject, body) => {
-    const s = encodeURIComponent(subject || "");
-    const b = encodeURIComponent(body || "");
-    return `mailto:${to}?subject=${s}&body=${b}`;
-  };
+  // Formspree form IDs - Replace these with your actual Formspree form IDs
+  const VOLUNTEER_FORM_ID = "xdkpegzn"; // Replace with your volunteer form ID from Formspree
+  const NEWSLETTER_FORM_ID = "xanleojy"; // Replace with your newsletter form ID from Formspree
 
-  const buildVolunteerEmailBody = (data) => {
-    const selectedInterests = interestOptions
-      .filter(opt => data.interests.includes(opt.value))
-      .map(opt => opt.label)
-      .join(", ");
-
-    return [
-      `Name: ${data.name}`,
-      `Age: ${data.age}`,
-      `Gender: ${data.gender}`,
-      `Education: ${data.education}`,
-      `Location: ${data.location}`,
-      `Language: ${data.language}`,
-      `WhatsApp: ${data.whatsapp}`,
-      `Email: ${data.email}`,
-      `Interests: ${selectedInterests}`,
-      `Duration: ${data.duration}`,
-      `Agreement: ${data.agreement ? "Yes" : "No"}`,
-    ].join("\n");
-  };
-
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
     if (!formData.name || !formData.age || !formData.gender || !formData.education || 
         !formData.location || !formData.language || !formData.whatsapp || !formData.email || !formData.agreement) {
       alert("Please fill all required fields and accept the agreement.");
       return;
     }
 
-    const subject = "Volunteer Application";
-    const body = buildVolunteerEmailBody(formData);
-    const mailto = encodeMailTo("sriranjan@arghyatrust.org", subject, body);
+    setIsSubmitting(true);
 
-    window.location.href = mailto;
+    try {
+      const response = await fetch(`https://formspree.io/f/${VOLUNTEER_FORM_ID}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _subject: "New Volunteer Application - Arghya Trust",
+          _replyto: formData.email,
+          name: formData.name,
+          age: formData.age,
+          gender: formData.gender,
+          education: formData.education,
+          location: formData.location,
+          language: formData.language,
+          whatsapp: formData.whatsapp,
+          email: formData.email,
+          interests: formData.interests.join(", "),
+          duration: formData.duration,
+          agreement: formData.agreement ? "Yes" : "No",
+          source: "Arghya Trust Website Volunteer Form",
+        }),
+      });
 
-    alert("Opening your email client with the application details. Thank you!");
-    setIsFormVisible(false);
-    setFormData({
-      name: "",
-      age: "",
-      gender: "",
-      education: "",
-      location: "",
-      language: "",
-      whatsapp: "",
-      email: "",
-      interests: [],
-      duration: "",
-      agreement: false,
-    });
-    setIsInterestsOpen(false);
+      if (response.ok) {
+        alert("Thank you for your application! We will get back to you soon.");
+        setIsFormVisible(false);
+        setFormData({
+          name: "",
+          age: "",
+          gender: "",
+          education: "",
+          location: "",
+          language: "",
+          whatsapp: "",
+          email: "",
+          interests: [],
+          duration: "",
+          agreement: false,
+        });
+        setIsInterestsOpen(false);
+      } else {
+        throw new Error("Form submission failed");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("There was an error submitting your application. Please try again or contact us directly.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleNewsletterSend = () => {
+  const handleNewsletterSubmit = async (e) => {
+    e.preventDefault();
+    
     if (!newsletterEmail) {
-      alert("Please enter an email to write to us.");
+      alert("Please enter your email address.");
       return;
     }
-    const subject = "Newsletter / Message from website";
-    const body = `Message from: ${newsletterEmail}\n\nPlease write your message here...`;
-    const mailto = encodeMailTo("sriranjan@arghyatrust.org", subject, body);
-    window.location.href = mailto;
-    setNewsletterEmail("");
-    alert("Opening your email client. Thank you for reaching out!");
+
+    setIsNewsletterSubmitting(true);
+
+    try {
+      const response = await fetch(`https://formspree.io/f/${NEWSLETTER_FORM_ID}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _subject: "Newsletter Subscription - Arghya Trust",
+          _replyto: newsletterEmail,
+          email: newsletterEmail,
+          message: "I would like to subscribe to the Arghya Trust newsletter and receive updates.",
+          source: "Arghya Trust Website Newsletter Form",
+        }),
+      });
+
+      if (response.ok) {
+        alert("Thank you for subscribing to our newsletter!");
+        setNewsletterEmail("");
+      } else {
+        throw new Error("Newsletter subscription failed");
+      }
+    } catch (error) {
+      console.error("Error subscribing to newsletter:", error);
+      alert("There was an error subscribing to our newsletter. Please try again or contact us directly.");
+    } finally {
+      setIsNewsletterSubmitting(false);
+    }
   };
 
   return (
@@ -259,24 +296,26 @@ const FooterSection = () => {
               </h3>
 
               <p className="text-sm text-gray-700 leading-relaxed mb-4">
-                Write to us or use the contact details below.
+                Subscribe to our newsletter or use the contact details below.
               </p>
 
-              <div className="flex gap-2 mb-6 w-full">
+              <form onSubmit={handleNewsletterSubmit} className="flex gap-2 mb-6 w-full">
                 <input
                   type="email"
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
-                  placeholder="Write to Us..."
+                  placeholder="Your email address..."
                   className="flex-1 px-4 py-3 rounded-lg border border-gray-300 outline-none focus:border-black focus:ring-1 focus:ring-black transition-all text-sm"
+                  required
                 />
                 <button
-                  onClick={handleNewsletterSend}
-                  className="px-6 py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition-colors text-sm"
+                  type="submit"
+                  disabled={isNewsletterSubmitting}
+                  className="px-6 py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Send
+                  {isNewsletterSubmitting ? "Subscribing..." : "Subscribe"}
                 </button>
-              </div>
+              </form>
 
               <div className="space-y-4 w-full">
                 <div className="flex items-start gap-3">
@@ -342,6 +381,7 @@ const FooterSection = () => {
                 <div className="flex items-start justify-between">
                   <div>
                     <h2 className="text-2xl font-bold text-black">REGISTRATION FORM</h2>
+                    <p className="text-sm text-gray-700 mt-1">All information will be sent directly to Arghya Trust</p>
                   </div>
                   <button
                     onClick={() => setIsFormVisible(false)}
@@ -355,7 +395,7 @@ const FooterSection = () => {
 
               {/* Scrollable Form Content */}
               <div className="overflow-y-auto flex-1">
-                <div className="p-6 space-y-6">
+                <form onSubmit={handleSubmit} className="p-6 space-y-6">
                   {/* Personal Details */}
                   <div>
                     <h4 className="font-semibold text-lg mb-4 text-black">Personal Details</h4>
@@ -366,6 +406,7 @@ const FooterSection = () => {
                         onChange={handleInputChange}
                         placeholder="Full Name *"
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white outline-none focus:border-black focus:ring-1 focus:ring-black"
+                        required
                       />
                       <div className="grid grid-cols-2 gap-3">
                         <input
@@ -377,12 +418,14 @@ const FooterSection = () => {
                           onChange={handleInputChange}
                           placeholder="Age *"
                           className="px-4 py-3 rounded-lg border border-gray-300 bg-white outline-none focus:border-black focus:ring-1 focus:ring-black"
+                          required
                         />
                         <select
                           name="gender"
                           value={formData.gender}
                           onChange={handleInputChange}
                           className="px-4 py-3 rounded-lg border border-gray-300 bg-white outline-none focus:border-black focus:ring-1 focus:ring-black"
+                          required
                         >
                           <option value="">Select Gender *</option>
                           <option value="male">Male</option>
@@ -396,6 +439,7 @@ const FooterSection = () => {
                         onChange={handleInputChange}
                         placeholder="Educational Qualification *"
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white outline-none focus:border-black focus:ring-1 focus:ring-black"
+                        required
                       />
                     </div>
                   </div>
@@ -410,6 +454,7 @@ const FooterSection = () => {
                         onChange={handleInputChange}
                         placeholder="City, State *"
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white outline-none focus:border-black focus:ring-1 focus:ring-black"
+                        required
                       />
                       <div className="grid grid-cols-2 gap-3">
                         <select
@@ -417,6 +462,7 @@ const FooterSection = () => {
                           value={formData.language}
                           onChange={handleInputChange}
                           className="px-4 py-3 rounded-lg border border-gray-300 bg-white outline-none focus:border-black focus:ring-1 focus:ring-black"
+                          required
                         >
                           <option value="">Select Language *</option>
                           {languageOptions.map((lang) => (
@@ -431,6 +477,7 @@ const FooterSection = () => {
                           onChange={handleInputChange}
                           placeholder="WhatsApp Number *"
                           className="px-4 py-3 rounded-lg border border-gray-300 bg-white outline-none focus:border-black focus:ring-1 focus:ring-black"
+                          required
                         />
                       </div>
                       <input
@@ -440,6 +487,7 @@ const FooterSection = () => {
                         placeholder="Email Address *"
                         type="email"
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white outline-none focus:border-black focus:ring-1 focus:ring-black"
+                        required
                       />
                     </div>
                   </div>
@@ -529,6 +577,7 @@ const FooterSection = () => {
                       checked={formData.agreement}
                       onChange={handleInputChange}
                       className="w-5 h-5 mt-1"
+                      required
                     />
                     <div className="text-sm text-gray-800 leading-relaxed">
                       I solemnly pledge to join this sacred movement with dedication and sincerity. I commit to contributing my time, energy, and skills for the transformation of Self, service to the World, and offerings to the Divine.
@@ -536,13 +585,13 @@ const FooterSection = () => {
                   </label>
 
                   <button
-                    onClick={handleSubmit}
-                    disabled={!formData.agreement}
+                    type="submit"
+                    disabled={!formData.agreement || isSubmitting}
                     className="w-full py-4 rounded-lg bg-black text-white font-bold text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-800 transition-colors"
                   >
-                    Begin Your Journey with Arghya
+                    {isSubmitting ? "Submitting..." : "Begin Your Journey with Arghya"}
                   </button>
-                </div>
+                </form>
               </div>
             </motion.div>
           </motion.div>
