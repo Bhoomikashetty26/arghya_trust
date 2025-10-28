@@ -105,8 +105,8 @@ const FooterSection = () => {
   };
 
   // Formspree form IDs - Replace these with your actual Formspree form IDs
-  const VOLUNTEER_FORM_ID = "xdkpegzn"; // Replace with your volunteer form ID from Formspree
-  const NEWSLETTER_FORM_ID = "xanleojy"; // Replace with your newsletter form ID from Formspree
+  const VOLUNTEER_FORM_ID = "xgvpakjy"; // Replace with your volunteer form ID from Formspree
+  const NEWSLETTER_FORM_ID = "xpwopdgl"; // Replace with your newsletter form ID from Formspree
 
   const handleSubmit = async (e) => {
     e.preventDefault();

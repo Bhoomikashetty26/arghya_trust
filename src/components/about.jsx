@@ -295,12 +295,11 @@ const About = () => {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
       {[
         {
-  name: "Sri Ranjan Bellarpady",
-  role: "Managing Trustee",
-  img: T1,
-  fb: "https://www.facebook.com/ranjanbellarpady",
-},
-,
+          name: "Sri Ranjan Bellarpady",
+          role: "Managing Trustee",
+          img: T1,
+          fb: "https://www.facebook.com/ranjanbellarpady",
+        },
         {
           name: "Mr. Bellala Gopinath Rao",
           role: "Trustee",
@@ -338,17 +337,30 @@ const About = () => {
           <h4 className="text-lg font-semibold text-[#1a365d]">
             {person.name}
           </h4>
-          <p className="text-sm text-[#2d5a4d] font-medium mb-2">
+          <p className="text-sm text-[#2d5a4d] font-medium mb-4">
             {person.role}
           </p>
 
-          {/* Social Icons */}
-          <div className="flex justify-center gap-4">
-            <a href={person.fb} target="_blank" rel="noopener noreferrer" className="text-[#1877F2] text-xl hover:scale-110 transition-transform">
-              <i className="fab fa-facebook-f"></i>
-            </a>
+        {/* Social Icons and Bio Button */}
+<div className="flex justify-center items-center gap-3 mt-3">
+  {/* Facebook Icon */}
+  <a
+    href={person.fb}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex justify-center items-center w-10 h-10 bg-[#1877F2]/10 rounded-lg hover:bg-[#1877F2]/20 transition-transform hover:scale-105"
+  >
+    <i className="fab fa-facebook-f text-[#1877F2] text-lg"></i>
+  </a>
 
-          </div>
+  {/* View Bio Button */}
+  <button
+    onClick={() => console.log(`View ${person.name} bio`)}
+    className="flex justify-center items-center w-24 h-10 bg-[#1a365d] text-white rounded-lg hover:bg-[#2d5a4d] transition-colors duration-300 font-medium text-sm"
+  >
+    View Bio
+  </button>
+</div>
         </motion.div>
       ))}
     </div>
@@ -490,6 +502,72 @@ const About = () => {
   
 </motion.section>
 
+{/* OUR TEAM Section */}
+<motion.section
+  initial={{ opacity: 0, y: 50 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  className="mb-16 px-4"
+>
+  <h3 className="text-3xl md:text-4xl font-serif font-bold text-[#1a365d] mb-8 text-center">
+    OUR TEAM
+  </h3>
+
+  {/* Elegant Container */}
+  <div className="max-w-sm mx-auto bg-gradient-to-br from-[#E8E8E8] to-[#DBDBDB] rounded-2xl p-6 shadow-2xl border border-white/30">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="bg-white rounded-xl p-5 text-center shadow-lg border border-white/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+    >
+      {/* Profile Image with Elegant Frame */}
+      <div className="relative mb-4">
+        <div className="overflow-hidden rounded-xl shadow-inner">
+          <img
+            src={T1}
+            alt="Mr. Arjun Rao"
+            className="w-full h-52 object-cover rounded-xl hover:scale-105 transition-transform duration-500"
+          />
+        </div>
+        {/* Subtle decorative element */}
+        <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-[#1a365d] to-[#2d5a4d] rounded-full"></div>
+      </div>
+
+      {/* Name & Role with Better Typography */}
+      <div className="mb-4">
+        <h4 className="text-xl font-bold text-[#1a365d] mb-1 tracking-tight">
+          Mr. Arjun Rao
+        </h4>
+        <p className="text-sm font-semibold text-[#2d5a4d] bg-[#f8f9fa] py-1 px-3 rounded-full inline-block">
+          Director
+        </p>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="flex justify-center items-center gap-3">
+        {/* Facebook Button */}
+        <a
+         
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center w-10 h-10 bg-[#1877F2] text-white rounded-lg hover:bg-[#166FE5] hover:scale-105 transition-all duration-300 shadow-sm"
+        >
+          <i className="fab fa-facebook-f text-sm"></i>
+        </a>
+
+        {/* View Bio Button */}
+        <button
+          onClick={() => console.log('View Arjun Rao bio')}
+          className="flex items-center justify-center w-24 h-10 bg-gradient-to-r from-[#1a365d] to-[#2d5a4d] text-white rounded-lg hover:from-[#2d5a4d] hover:to-[#1a365d] hover:scale-105 transition-all duration-300 font-medium text-sm shadow-sm"
+        >
+          View Bio
+        </button>
+      </div>
+    </motion.div>
+  </div>
+</motion.section>
 
     {/* Impact Section */}
 <motion.div

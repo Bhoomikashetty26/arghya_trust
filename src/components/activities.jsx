@@ -20,7 +20,7 @@ const Activities = () => {
     },
     {
       id: 2,
-      title: "Be & Make (Youth Workshop)",
+      title: "Be & Make\n(Youth Workshop)",
       description: `In association with Mangalore University Swami Vivekananda Study Centre, this program equips youth with personality development, leadership, financial literacy, industry-based training, and nation-building spirit. It also functions as an after-college program.`,
       image: O2,
     },
@@ -35,7 +35,7 @@ const Activities = () => {
   const upcomingProjects = [
     {
       id: 4,
-      title: "Swachha Biligiri (BR Hills Cleanliness Campaign)",
+      title: "Swachha Biligiri\n(BR Hills Cleanliness Campaign)",
       description: `This initiative of the Trust in association with VGKK and Karuna Trust promotes holistic cleanliness and sustainability in the Biligiri Rangan Hills. The program integrates regular waste collection, segregation, and processing with community empowerment. Through a dedicated livelihood centre, Soliga tribal communities create sustainable products, combining environmental conservation with economic self-reliance, making Swachha Biligiri a model for eco-living and inclusive rural development.`,
       image: U1,
     },
@@ -119,7 +119,7 @@ const Activities = () => {
                   </div>
                   <div className="p-6 flex-1 overflow-auto">
                     <h3
-                      className={`text-2xl font-bold mb-2 transition-colors font-serif ${
+                      className={`text-2xl font-bold mb-2 transition-colors font-serif whitespace-pre-line ${
                         activeCard === activity.id
                           ? "text-red-600"
                           : "text-[#1a365d] group-hover:text-[#dc2626]"
@@ -149,7 +149,7 @@ const Activities = () => {
           >
             {/* Heading */}
             <h4 className="text-3xl md:text-4xl font-serif font-bold text-[red] mb-10 drop-shadow-md text-center">
-              Shatachandi Maha Yagna – 2026
+              Shatachandi Maha Yagna – January 2026
             </h4>
 
             {/* Image + Text Grid */}
@@ -274,7 +274,7 @@ const Activities = () => {
                   </div>
                   <div className="p-6 flex-1 overflow-auto">
                     <h3
-                      className={`text-2xl font-bold mb-2 transition-colors font-serif ${
+                      className={`text-2xl font-bold mb-2 transition-colors font-serif whitespace-pre-line ${
                         activeCard === project.id
                           ? "text-red-600"
                           : "text-[#1a365d] group-hover:text-[#dc2626]"
